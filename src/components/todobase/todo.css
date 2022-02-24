@@ -1,0 +1,14 @@
+.todo {
+    width: 50%;
+    border-color: black;
+    border-style:solid;
+    border-width: 2px;
+}
+
+/*remove list item left padding 
+https://social.msdn.microsoft.com/Forums/en-US/91162aba-673e-465a-b795-ecca9a5c9631/how-to-remove-ul-list-left-margin?forum=asphtmlcssjavascript*/
+.itemList {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}

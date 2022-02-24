@@ -1,9 +1,10 @@
 import './App.css';
+import { Todo } from './components/todobase';
 
 function App() {
   return (
     <div className="App">
-      placeholder
+      <Todo />
     </div>
   );
 }
