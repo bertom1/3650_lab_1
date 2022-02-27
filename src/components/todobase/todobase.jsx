@@ -6,12 +6,12 @@ import './todo.css'
 
 const Todo = () => {
     //default value for new task form
-    const blankTask = {taskNake: '', taskDate:''}
-    //hooks for managing tasks and task values
-    const [tasks, setTasks] = useState([{taskName: "random", taskDate: '1/2/3'}]);
+    const blankTask = {taskName: '', taskDate:''}
+    //<-----hooks----->
+    const [tasks, setTasks] = useState([{taskName: "random", taskDate: '1/2/3'} ]);
     const [newTask, setNewTask] = useState(blankTask)
     const [add, setAdd] = useState(false)
-    //event handlers
+    //<-----event handlers----->
     //hides new task form and resets form to default value
     const cancelAdd = () => {
         setAdd(false)
@@ -28,6 +28,14 @@ const Todo = () => {
         setTasks([...tasks, newTask])
         setNewTask(blankTask);
         setAdd(false)
+    }
+    /*searches current task list and removes the task that matches the target ID (target ID is the current index of the task to be deleted)
+    once task is removed and state is updated, a rerender is triggered which updates the indexs of each task as they are rendered with the map function below
+    allows deleting tasks without having to manually update indexes
+    */
+    const deleteTask = (targetId) => {
+        let updatedTasks = tasks.filter((_, index) => index !== targetId)
+        setTasks(updatedTasks)
     }
     return <div className="todo">
         {/* conditional render for add task button, button action depends on state of adding setTasks
@@ -49,8 +57,10 @@ const Todo = () => {
                     <button type='submit' >Add Task</button>
                 </form>
             </li>}
-            {tasks.map((task, k) => {
-                return <ToDoCard key = {k} item={task.taskName} date={task.taskDate} />
+            {tasks.map((task, index) => {
+                //Pass task object items as props to the card component
+                //add delete function to propchain to trigger delete action from within the component
+                return <ToDoCard key = {index} index={index} item={task.taskName} date={task.taskDate} delete={deleteTask}/>
             })}
         </ul>
     </div>
