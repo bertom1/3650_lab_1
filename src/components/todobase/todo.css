@@ -1,5 +1,4 @@
 .todo {
-    width: 50%;
     border-color: black;
     border-style:solid;
     border-width: 2px;
@@ -13,4 +12,11 @@
 
 .deleteButton {
     background-color: unset;
+}
+
+.formInput {
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+    width: max-content;
 }

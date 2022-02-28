@@ -8,7 +8,7 @@ const Todo = () => {
     //default value for new task form
     const blankTask = {taskName: '', taskDate:''}
     //<-----hooks----->
-    const [tasks, setTasks] = useState([{taskName: "random", taskDate: '1/2/3'} ]);
+    const [tasks, setTasks] = useState([{taskName: "random", taskDate: '2022-01-02'} ]);
     const [newTask, setNewTask] = useState(blankTask)
     const [add, setAdd] = useState(false)
     //<-----event handlers----->
@@ -49,12 +49,18 @@ const Todo = () => {
             {/* conditional render for new task box
             display a task input box at the top of the task list when add is set to true, otherwise dont render */}
             {add && 
-            <li>
-                <form onSubmit={submitTask}>
-                    <label>Task Name: 
-                        <input name="taskName" required={true} type={'text'} onChange={handleChange}/>
-                    </label>
-                    <button type='submit' >Add Task</button>
+            <li >
+                <form onSubmit={submitTask} style={{display:'flex'}, {flexDirection:'row'} }>
+                    <div className="formInput" >
+                        <label >Task Name: 
+                            <input name="taskName" required={true} type={'text'} onChange={handleChange}/>
+                        </label>
+                        <label >
+                            Due Date: 
+                            <input name='taskDate' type={'date'} onChange={handleChange}/>
+                        </label>
+                    </div>
+                    <button type='submit' style={{width:'max-content'}, {backgroundColor:'red'}}>Add Task</button>
                 </form>
             </li>}
             {tasks.map((task, index) => {

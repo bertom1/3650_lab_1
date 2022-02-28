@@ -2,9 +2,28 @@
 import "./todocard.css"
 import {IoTrashOutline} from 'react-icons/io5'
 const TodoCard = (props) => {
+    const months = {
+        '01': 'Jan',
+        '02': 'Feb',
+        '03': "Mar", 
+        '04': 'Apr',
+        '05': 'May',
+        '06': 'Jun',
+        '07': 'Jul',
+        '08': 'Aug',
+        '09': 'Sept',
+        '10': 'Oct',
+        '11': 'Nov',
+        '12': 'Dec',
+    }
+    const formatDate = () => {
+        let dateArr = props.date.split('-')
+        return `${months[dateArr[1]]} ${dateArr[2]}, ${dateArr[0]}`
+    }
     return <div className='todocard'>
-        <li className="cardItem">
-            {props.item}
+        <li >
+            {`${props.item}`} 
+            {props.date && ` Due By ${formatDate()}`}
             <button type='button' className="deleteButton" onClick={() => props.delete(props.index)}>
                 <IoTrashOutline style={{color: "red"}}/>
             </button>
