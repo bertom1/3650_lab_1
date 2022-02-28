@@ -1,6 +1,7 @@
 //for displaying a collection of todo tasks, should hold all current tasks (array of objects maybe)
 
 import { useState } from "react"
+import { CompletedTask } from "../completedcard";
 import { ToDoCard } from "../todocard";
 import './todo.css'
 
@@ -8,7 +9,8 @@ const Todo = () => {
     //default value for new task form
     const blankTask = {taskName: '', taskDate:''}
     //<-----hooks----->
-    const [tasks, setTasks] = useState([{taskName: "random", taskDate: '1/2/3'} ]);
+    const [tasks, setTasks] = useState([{taskName: "random", taskDate: '1/2/3'} ])
+    const [completedTasks, setCompletedTasks] = useState([])
     const [newTask, setNewTask] = useState(blankTask)
     const [add, setAdd] = useState(false)
     //<-----event handlers----->
@@ -37,13 +39,25 @@ const Todo = () => {
         let updatedTasks = tasks.filter((_, index) => index !== targetId)
         setTasks(updatedTasks)
     }
+    const completeTask= (targetId) => {
+        setCompletedTasks([...completedTasks, tasks[targetId]])
+        deleteTask(targetId)
+    }
+    const undoComplete = (targetId) => {
+        setTasks([...tasks, completedTasks[targetId]])
+        let updatedTasks = completedTasks.filter((_, index) => index !== targetId)
+        setCompletedTasks(updatedTasks)
+    }
     return <div className="todo">
         {/* conditional render for add task button, button action depends on state of adding setTasks
         Display as a cancel button if a new task is in progress, otherwise display as an add button */}
         {add ? 
         <button type='button' onClick={cancelAdd}>Cancel</button>
         : 
-        <button type='button' onClick={() => setAdd(true)}>Add New Task</button>
+        <div> 
+            Current Tasks: 
+            <button type='button' onClick={() => setAdd(true)}>Add New Task</button>
+        </div>
         }
         <ul className="itemList">
             {/* conditional render for new task box
@@ -57,11 +71,21 @@ const Todo = () => {
                     <button type='submit' >Add Task</button>
                 </form>
             </li>}
-            {tasks.map((task, index) => {
+            {tasks.length > 0 ? tasks.map((task, index) => {
                 //Pass task object items as props to the card component
                 //add delete function to propchain to trigger delete action from within the component
-                return <ToDoCard key = {index} index={index} item={task.taskName} date={task.taskDate} delete={deleteTask}/>
-            })}
+                return <ToDoCard key = {index} id={index} task={task} remove={deleteTask} complete={completeTask}/>
+            })
+            :
+            <li>No tasks available</li>
+            }
+            <li>Completed Tasks: </li>
+            {completedTasks.length > 0 ? completedTasks.map((task, index) => {
+                return <CompletedTask key={index} id={index} task={task} undo={undoComplete}/>
+            })
+            :
+            <li>No Tasks Completed</li>
+            }
         </ul>
     </div>
 }
