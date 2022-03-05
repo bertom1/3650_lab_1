@@ -28,7 +28,7 @@ const TodoCard = ({id, task, remove, complete}) => {
             </button>
             {task.taskName}
             {task.taskDate && ` Due By ${formatDate()}`}
-            <button type='button' className="deleteButton" onClick={() => remove(id)}>
+            <button type='button' onClick={() => remove(id)}>
                 <IoTrashOutline style={{color: "red"}}/>
             </button>
         </li>

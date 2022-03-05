@@ -10,13 +10,11 @@
     margin-left: 0;
 }
 
-.deleteButton {
-    background-color: unset;
+.addForm{
+    display: flex;
+    justify-content: center;
 }
 
-.formInput {
-    display: flex;
-    flex-direction: column;
-    background-color: aqua;
-    width: max-content;
+.addBtn {
+    height: max-content;
 }
