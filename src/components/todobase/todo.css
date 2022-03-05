@@ -1,5 +1,4 @@
 .todo {
-    width: 50%;
     border-color: black;
     border-style:solid;
     border-width: 2px;
@@ -11,6 +10,11 @@
     margin-left: 0;
 }
 
-.deleteButton {
-    background-color: unset;
+.addForm{
+    display: flex;
+    justify-content: center;
+}
+
+.addBtn {
+    height: max-content;
 }
