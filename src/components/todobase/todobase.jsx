@@ -52,11 +52,13 @@ const Todo = () => {
         {/* conditional render for add task button, button action depends on state of adding setTasks
         Display as a cancel button if a new task is in progress, otherwise display as an add button */}
         {add ? 
+        <div>
         <button type='button' onClick={cancelAdd}>Cancel</button>
+        </div>
         : 
         <div> 
-            Current Tasks: 
             <button type='button' onClick={() => setAdd(true)}>Add New Task</button>
+           <div > Current Tasks: </div>
         </div>
         }
         <ul className="itemList">
@@ -87,7 +89,7 @@ const Todo = () => {
             :
             <li>No tasks available</li>
             }
-            <li>Completed Tasks: </li>
+            <li style={{textAlign:'center'}}>Completed Tasks: </li>
             {completedTasks.length > 0 ? completedTasks.map((task, index) => {
                 return <CompletedTask key={index} id={index} task={task} undo={undoComplete}/>
             })
