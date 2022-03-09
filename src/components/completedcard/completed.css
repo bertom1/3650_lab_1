@@ -1,6 +1,8 @@
 .completedCard {
     display: flex;
-    justify-content: right;
+    display: -webkit-flex;
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
     margin: 5px 0px 10px 0px;
 }
 .taskName {
