@@ -3,10 +3,8 @@
     display: -webkit-flex;
     margin: 5px 0px 5px 0px;
 }
-.cardText {
-    text-align: left;
-}
 .taskName {
+    text-align: left;
     width: 45vw;
     height:auto;
     min-height: 10px;
@@ -61,10 +59,7 @@
 
 @media screen and (max-width: 700px) {
     .taskName {
-        width: 55vw;
+        width: 50vw;
     }
-    /* .todoCard {
-        justify-content: space-between;
-    } */
 }
 

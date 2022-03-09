@@ -5,25 +5,7 @@
     -webkit-justify-content: flex-end;
     margin: 5px 0px 10px 0px;
 }
-.taskName {
-    text-align: left;
-    width: 45vw;
-    height:auto;
-    min-height: 10px;
-    overflow-wrap: break-word;
-}
-@media screen and (min-width: 1024px){
-    .taskName {
-        width: 400px;
-    }
-}
-
-@media screen and (max-width: 700px) {
-    .taskName {
-        width: 55vw;
-    }
-}
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 315px) {
     .cardBtn {
         display:block;
     }
