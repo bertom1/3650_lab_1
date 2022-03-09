@@ -52,13 +52,13 @@
     color:white;
 }
 
-@media screen and (min-width: 1024px){
+@media screen and (min-device-width: 1024px){
     .taskName {
         width: 400px;
     }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-device-width: 700px) {
     .taskName {
         width: 55vw;
     }
