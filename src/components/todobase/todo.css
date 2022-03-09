@@ -1,6 +1,19 @@
 .todo {
+    background-color: lightgray;
+    width: fit-content;
+    display: inline-block;
+    border-radius: 15px;
+    padding: 10px 10px 0px 10px
 }
-
+.inputField {
+    margin: 0px 2px 0px 2px;
+}
+.toggleBtn {
+    box-shadow: none;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}
 .itemList {
     list-style: none;
     padding: 0;
@@ -14,4 +27,26 @@
 
 .addBtn {
     height: max-content;
+}
+
+@media screen and (min-width: 1024px){
+    .todo {
+        min-width: 600px;
+    }
+}
+@media screen and (min-width: 701px) and (max-width:1023px) {
+    .todo {
+        min-width: 60vw;
+    }
+}
+@media screen and (min-width: 400px) and (max-width:700px) {
+    .todo {
+        min-width: 80vw;
+    }
+}
+@media screen and (max-width: 400px) {
+    .todo {
+        padding: 10px 0px 0px 0px;
+        width: 100%;
+    }
 }

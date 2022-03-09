@@ -9,7 +9,7 @@ const Todo = () => {
     //default value for new task form
     const blankTask = {taskName: '', taskDate:''}
     //<-----hooks----->
-    const [tasks, setTasks] = useState([{taskName: "random", taskDate: '2022-01-02'} ])
+    const [tasks, setTasks] = useState([{taskName: "Sample task", taskDate: '2022-01-02'} ])
     const [completedTasks, setCompletedTasks] = useState([])
     const [newTask, setNewTask] = useState(blankTask)
     const [add, setAdd] = useState(false)
@@ -33,7 +33,7 @@ const Todo = () => {
     }
     /*searches current task list and removes the task that matches the target ID (target ID is the current index of the task to be deleted)
     once task is removed and state is updated, a rerender is triggered which updates the indexs of each task as they are rendered with the map function below
-    allows deleting tasks without having to manually update indexes
+    rerender allows deleting tasks without having to manually update indexes
     */
     const deleteTask = (targetId) => {
         let updatedTasks = tasks.filter((_, index) => index !== targetId)
@@ -48,17 +48,21 @@ const Todo = () => {
         let updatedTasks = completedTasks.filter((_, index) => index !== targetId)
         setCompletedTasks(updatedTasks)
     }
+    const deleteCompleted = (targetId) => {
+        let updatedTasks = completedTasks.filter((_, index) => index !== targetId)
+        setCompletedTasks(updatedTasks);
+    }
+        
     return <div className="todo">
         {/* conditional render for add task button, button action depends on state of adding setTasks
         Display as a cancel button if a new task is in progress, otherwise display as an add button */}
         {add ? 
         <div>
-        <button type='button' onClick={cancelAdd}>Cancel</button>
+        <button className='toggleBtn' type='button' onClick={cancelAdd}>Cancel</button>
         </div>
         : 
         <div> 
-            <button type='button' onClick={() => setAdd(true)}>Add New Task</button>
-           <div > Current Tasks: </div>
+            <button className='toggleBtn' type='button' onClick={() => setAdd(true)}>Add New Task</button>
         </div>
         }
         <ul className="itemList">
@@ -69,17 +73,18 @@ const Todo = () => {
                 <form onSubmit={submitTask} className='addForm'>
                     <div className="formInput" >
                         <label >Task Name: 
-                            <input name="taskName" required={true} type={'text'} onChange={handleChange}/>
+                            <input className='inputField'name="taskName" required={true} type={'text'} onChange={handleChange}/>
                         </label>
                         <br />
                         <label >
                             Due Date: 
-                            <input name='taskDate' type={'date'} onChange={handleChange}/>
+                            <input className='inputField' name='taskDate' type={'date'} onChange={handleChange}/>
                         </label>
                     </div>
                     <button type='submit' className='addBtn'>Add Task</button>
                 </form>
             </li>}
+            <div > Current Tasks: </div>
             {/* Render tasks if task array is not empty, otherwise display a message to indicate array is empty */}
             {tasks.length > 0 ? tasks.map((task, index) => {
                 //Pass task object items as props to the card component
@@ -91,7 +96,7 @@ const Todo = () => {
             }
             <li style={{textAlign:'center'}}>Completed Tasks: </li>
             {completedTasks.length > 0 ? completedTasks.map((task, index) => {
-                return <CompletedTask key={index} id={index} task={task} undo={undoComplete}/>
+                return <CompletedTask key={index} id={index} task={task} undo={undoComplete} remove={deleteCompleted}/>
             })
             :
             <li>No Tasks Completed</li>

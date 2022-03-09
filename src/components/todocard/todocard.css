@@ -1,6 +1,6 @@
 .todoCard {
     display: flex;
-    /* justify-content:space-around; */
+    margin: 5px 0px 5px 0px;
 }
 .cardText {
     text-align: left;
@@ -13,9 +13,16 @@
 }
 .cardBtn {
     height: max-content;
+    border: none;
+    background-color: transparent;
+}
+.cardBtn:hover {
+    background-color:darkgray
 }
 .priority {
+    margin-right: 2px;
     border: none;
+    border-radius: 15px;
     box-shadow: none;
     height:'auto';
     text-align:'center';

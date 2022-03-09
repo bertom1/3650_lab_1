@@ -35,14 +35,14 @@ const TodoCard = ({id, task, remove, complete}) => {
                 </select>
                 <div className="cardText">
                     <div className="taskName">{task.taskName } </ div>
-                    <div >{task.taskDate && ` Due By: ${formatDate()}`}</ div>
+                    <div >{`Due By: ${task.taskDate ? formatDate(): 'N/A'}`}</ div>
                 </div>
             <div>
                 <button className='cardBtn'type='button' onClick={() => complete(id)}>
-                    <IoCheckmarkCircleOutline style={{color:'green'}}/>
+                    <IoCheckmarkCircleOutline size='20'style={{color:'green'}}/>
                 </button>
                 <button className='cardBtn' type='button' onClick={() => remove(id)}>
-                    <IoTrashOutline style={{color: "red"}}/>
+                    <IoTrashOutline size='20' style={{color: "red"}}/>
                 </button>
             </div>
         </li>
