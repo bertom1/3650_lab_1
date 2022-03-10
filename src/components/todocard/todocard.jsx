@@ -3,7 +3,9 @@ import "./todocard.css"
 import {IoTrashOutline, IoCheckmarkCircleOutline} from 'react-icons/io5'
 import { useState } from "react"
 
-const TodoCard = ({id, task, remove, complete}) => {
+const TodoCard = ({id, task, change, remove, complete}) => {
+    const date = new Date().toLocaleDateString().split('/');
+    const currDate = `${date[2]}-${date[0].length < 2 ? '0'+date[0] : date[0]}-${date[1].length < 2 ? '0'+date[1] : date[1]}`
     const [color, setColor] = useState('empty')
     const handleChange = e => {
         setColor(e.target.value)
@@ -33,9 +35,11 @@ const TodoCard = ({id, task, remove, complete}) => {
                     <option value={'yellow'} className='yellow'>Medium</option>
                     <option value={'green'} className='green'>Low</option>
                 </select>
-                <div className="cardText">
-                    <div className="taskName">{task.taskName } </ div>
-                    <div >{`Due By: ${task.taskDate ? formatDate(): 'N/A'}`}</ div>
+                <div >
+                    <div className="taskName">{task.taskName}</ div>
+                    <div style={{width:'max-content'}}>Due By:
+                        <input className='inputField' name='taskDate' type={'date'} min={currDate} value={task.taskDate} onChange={(e) => change(e, id)}/>
+                    </ div>
                 </div>
             <div>
                 <button className='cardBtn'type='button' onClick={() => complete(id)}>

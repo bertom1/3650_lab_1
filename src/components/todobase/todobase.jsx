@@ -8,6 +8,8 @@ import './todo.css'
 const Todo = () => {
     //default value for new task form
     const blankTask = {taskName: '', taskDate:''}
+    const date = new Date().toLocaleDateString().split('/');
+    const currDate = `${date[2]}-${date[0].length < 2 ? '0'+date[0] : date[0]}-${date[1].length < 2 ? '0'+date[1] : date[1]}`
     //<-----hooks----->
     const [tasks, setTasks] = useState([{taskName: "Sample task", taskDate: '2022-01-02'} ])
     const [completedTasks, setCompletedTasks] = useState([])
@@ -27,7 +29,7 @@ const Todo = () => {
     //adds new task to the task list. Hides task form and resets task form to default value.
     const submitTask =(e) => {
         e.preventDefault();
-        setTasks([...tasks, newTask])
+        setTasks([newTask, ...tasks])
         setNewTask(blankTask);
         setAdd(false)
     }
@@ -36,21 +38,34 @@ const Todo = () => {
     rerender allows deleting tasks without having to manually update indexes
     */
     const deleteTask = (targetId) => {
-        let updatedTasks = tasks.filter((_, index) => index !== targetId)
-        setTasks(updatedTasks)
+        if (window.confirm(`Confirmation:\nAre you sure you want to delete "${tasks[targetId].taskName}"?`)){
+            let updatedTasks = tasks.filter((_, index) => index !== targetId)
+            setTasks(updatedTasks)
+        }
     }
     const completeTask= (targetId) => {
         setCompletedTasks([...completedTasks, tasks[targetId]])
-        deleteTask(targetId)
+        let updatedTasks = tasks.filter((_, index) => index !== targetId)
+        setTasks(updatedTasks)
     }
     const undoComplete = (targetId) => {
-        setTasks([...tasks, completedTasks[targetId]])
+        setTasks([completedTasks[targetId], ...tasks])
         let updatedTasks = completedTasks.filter((_, index) => index !== targetId)
         setCompletedTasks(updatedTasks)
     }
     const deleteCompleted = (targetId) => {
-        let updatedTasks = completedTasks.filter((_, index) => index !== targetId)
-        setCompletedTasks(updatedTasks);
+        if (window.confirm(`Confirmation:\nAre you sure you want to delete '${completedTasks[targetId].taskName}'`)){
+            let updatedTasks = completedTasks.filter((_, index) => index !== targetId)
+            setCompletedTasks(updatedTasks)
+        }
+    }
+    const editTask = (event, targetId) => {
+        let targetTask = tasks[targetId]
+        targetTask = {...targetTask, [event.target.name]: event.target.value}
+        console.log(targetTask)
+        let tasksCopy = [...tasks]
+        tasksCopy[targetId] = targetTask
+        setTasks(tasksCopy)
     }
         
     return <div className="todo">
@@ -78,23 +93,23 @@ const Todo = () => {
                         <br />
                         <label >
                             Due Date: 
-                            <input className='inputField' name='taskDate' type={'date'} onChange={handleChange}/>
+                            <input className='inputField' name='taskDate' type={'date'} min={currDate} onChange={handleChange}/>
                         </label>
                     </div>
                     <button type='submit' className='addBtn'>Add Task</button>
                 </form>
             </li>}
-            <div > Current Tasks: </div>
+            <div > {`Current Tasks (${tasks.length}):`} </div>
             {/* Render tasks if task array is not empty, otherwise display a message to indicate array is empty */}
             {tasks.length > 0 ? tasks.map((task, index) => {
                 //Pass task object items as props to the card component
                 //add delete function to propchain to trigger delete action from within the component
-                return <ToDoCard key = {index} id={index} task={task} remove={deleteTask} complete={completeTask}/>
+                return <ToDoCard key = {index} id={index} task={task} change={editTask} remove={deleteTask} complete={completeTask}/>
             })
             :
             <li>No tasks available</li>
             }
-            <li style={{textAlign:'center'}}>Completed Tasks: </li>
+            <li style={{textAlign:'center'}}>{`Completed Tasks (${completedTasks.length}):`} </li>
             {completedTasks.length > 0 ? completedTasks.map((task, index) => {
                 return <CompletedTask key={index} id={index} task={task} undo={undoComplete} remove={deleteCompleted}/>
             })
